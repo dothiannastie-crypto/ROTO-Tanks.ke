@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b51f24">
+<meta name="description" content="Roto Tanks — heavy duty water storage tanks, loft tanks and septic tanks in Kenya.">
+<title>Roto Tanks | Heavy Duty Tanks</title>
+
+<style>
+:root {
+  --primary: #c82026;
+  --primary-dark: #991b20;
+  --black: #111111;
+  --text: #292929;
+  --muted: #666666;
+  --bg: #f5f5f5;
+  --card: #ffffff;
+  --border: #e3e3e3;
+  --water: #2f7cf6;
+  --loft: #12b886;
+  --septic: #845ef7;
+  --detail-price: #1a73e8;
+  --mpesa: #43a047;
+  --whatsapp: #25d366;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+body { font-family: Arial, Helvetica, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { color: var(--primary-dark); }
+button { font: inherit; cursor: pointer; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid #e04b50; outline-offset: 3px; }
+img { user-select: none; }
+
+/* ===== Header ===== */
+header { background: var(--black); color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 3px 12px #0003; }
+.header-inner { max-width: 1200px; margin: auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.logo { color: white; font-size: 1.65rem; font-weight: 900; letter-spacing: -1px; white-space: nowrap; }
+.logo span { color: var(--primary); }
+nav { display: flex; align-items: center; gap: 25px; }
+nav a { color: white; font-size: .94rem; font-weight: 600; }
+nav a:hover { color: #ff6267; }
+.menu-toggle { display: none; border: 1px solid #555; border-radius: 7px; padding: 7px 12px; color: white; background: transparent; }
+
+/* ===== Hero ===== */
+.hero {
+  background: radial-gradient(ellipse at 80% 20%, #c8202633, transparent 45%),
+    linear-gradient(135deg, #111111, #292020 65%, #68171a);
+  color: white; text-align: center; padding: 78px 20px 84px; border-bottom: 5px solid var(--primary);
+}
+.hero .badge { display: inline-block; background: var(--primary); color: white; padding: 6px 16px; border-radius: 4px; font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 18px; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; margin-bottom: 16px; }
+.hero p { max-width: 720px; margin: auto; color: #e5e5e5; font-size: 1.05rem; }
+.hero-button { display: inline-block; background: var(--primary); color: white; padding: 12px 25px; margin-top: 25px; border-radius: 6px; font-weight: 700; }
+.hero-button:hover { background: var(--primary-dark); color: white; }
+
+/* ===== Sections ===== */
+section { max-width: 1200px; margin: auto; padding: 55px 20px; }
+.section-title { text-align: center; font-size: clamp(1.65rem, 3vw, 2.15rem); color: var(--black); margin-bottom: 8px; }
+.section-title::after { content: ""; display: block; width: 55px; height: 4px; background: var(--primary); margin: 12px auto 0; border-radius: 2px; }
+.section-sub { text-align: center; color: var(--muted); margin: 15px 0 30px; }
+
+/* ===== Filters ===== */
+.filters { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+.filter-btn { border: 1px solid #d4d4d4; background: white; padding: 9px 18px; border-radius: 5px; color: var(--text); font-size: .9rem; }
+.filter-btn:hover, .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+
+/* ===== Product grid & cards ===== */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 22px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; transition: transform .2s, box-shadow .2s; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px #00000012; }
+.card-img { height: 220px; background: #eeeeee; display: flex; align-items: center; justify-content: center; position: relative; padding: 10px; }
+.card-img img { width: 100%; height: 100%; object-fit: contain; }
+.card-cat { position: absolute; top: 12px; right: 12px; color: white; padding: 4px 11px; border-radius: 50px; font-size: .72rem; font-weight: 700; }
+.b-water { background: var(--water); } .b-loft { background: var(--loft); } .b-septic { background: var(--septic); }
+.card-body { padding: 17px; display: flex; flex-direction: column; flex: 1; }
+.card-body h3 { color: var(--black); font-size: 1.02rem; line-height: 1.4; margin-bottom: 8px; }
+.card-body p { color: var(--muted); font-size: .88rem; margin-bottom: 12px; flex: 1; }
+.card-meta { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: .82rem; margin-bottom: 12px; }
+.card-footer { border-top: 1px solid var(--border); padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.price { font-size: 1.05rem; color: var(--primary); font-weight: 800; }
+.rating { color: #f5a300; font-weight: 700; font-size: .9rem; display: flex; align-items: center; gap: 3px; }
+.view-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: var(--primary); color: white; border: none; border-radius: 6px; padding: 11px; margin-top: 14px; font-weight: 700; font-size: .95rem; }
+.view-btn:hover { background: var(--primary-dark); }
+
+/* ===== Info / contact / policy ===== */
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+.info-card, .contact-item, .policy-card { background: white; border: 1px solid var(--border); border-radius: 9px; padding: 25px; }
+.info-card { text-align: center; }
+.info-card h3 { color: var(--black); margin: 13px 0 8px; }
+.info-card p, .policy-card p { color: var(--muted); font-size: .92rem; }
+.icon-circle { width: 54px; height: 54px; border-radius: 50%; background: #fbe8e8; color: var(--primary); display: flex; align-items: center; justify-content: center; margin: auto; font-size: 1.5rem; }
+.contact-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.contact-item h3 { color: var(--black); margin-bottom: 8px; }
+.contact-item p { overflow-wrap: anywhere; }
+.contact-item a { font-weight: 600; }
+.policy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+.policy-card h3 { color: var(--black); margin-bottom: 12px; }
+.policy-card p { margin-bottom: 9px; }
+.feedback-card { max-width: 680px; margin: auto; text-align: center; }
+.feedback-card p { margin-bottom: 12px; }
+.empty-message { grid-column: 1 / -1; text-align: center; padding: 30px; color: var(--muted); }
+
+/* ===== Footer & floating contact ===== */
+footer { background: var(--black); color: #ddd; text-align: center; padding: 28px 20px; font-size: .9rem; border-top: 4px solid var(--primary); }
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 24px; margin-bottom: 16px; }
+.footer-links a { color: white; }
+.footer-links a:hover { color: #ff6267; }
+.floating-contact { position: fixed; right: 20px; bottom: 20px; z-index: 90; background: var(--primary); color: white; padding: 12px 19px; border-radius: 50px; font-weight: 800; display: flex; align-items: center; gap: 8px; box-shadow: 0 5px 18px #0004; }
+.floating-contact:hover { color: white; background: var(--primary-dark); }
+
+/* ===== Product detail modal ===== */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 200; display: none; align-items: flex-start; justify-content: center; padding: 20px; overflow-y: auto; }
+.modal-backdrop.open { display: flex; }
+.modal { background: white; border-radius: 14px; max-width: 460px; width: 100%; padding: 18px; position: relative; margin: 30px 0; animation: pop .2s ease; }
+@keyframes pop { from { transform: scale(.96); opacity: .6; } to { transform: scale(1); opacity: 1; } }
+.modal-close { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; border-radius: 50%; border: none; background: #f0f0f0; color: #555; font-size: 1.05rem; line-height: 1; }
+.modal-close:hover { background: #e2e2e2; }
+.detail-img { background: #eeeeee; border-radius: 10px; height: 260px; display: flex; align-items: center; justify-content: center; padding: 12px; }
+.detail-img img { width: 100%; height: 100%; object-fit: contain; }
+.detail-cat { display: block; width: fit-content; margin: 16px auto 10px; color: white; padding: 6px 22px; border-radius: 50px; font-size: .85rem; font-weight: 700; }
+.modal h3 { color: var(--black); font-size: 1.35rem; margin-bottom: 8px; }
+.modal .d-desc { color: var(--muted); font-size: .95rem; margin-bottom: 16px; }
+.d-dims-label { display: flex; align-items: center; gap: 8px; color: var(--text); font-weight: 700; font-size: 1.05rem; margin-bottom: 2px; }
+.d-dims { color: var(--text); font-size: 1.1rem; margin-bottom: 16px; }
+.d-stars-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.stars { position: relative; display: inline-block; font-size: 1.25rem; line-height: 1; letter-spacing: 2px; color: #d4d4d4; }
+.stars .fill { position: absolute; top: 0; left: 0; overflow: hidden; white-space: nowrap; color: #f5a300; }
+.d-reviews { color: var(--muted); font-size: .95rem; }
+.d-sold { color: #2e9e5b; font-weight: 700; font-size: .95rem; display: flex; align-items: center; gap: 5px; }
+.d-price { color: var(--detail-price); font-size: 1.8rem; font-weight: 800; margin-bottom: 18px; }
+.d-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border-radius: 8px; padding: 13px; font-weight: 700; font-size: 1rem; margin-bottom: 10px; border: none; }
+.d-btn svg { flex-shrink: 0; }
+.d-cart { background: var(--primary); color: white; }
+.d-cart:hover { background: var(--primary-dark); }
+.d-mpesa { background: white; color: var(--primary); border: 2px solid var(--primary); }
+.d-mpesa:hover { background: #fdf2f2; }
+.d-whatsapp { background: var(--whatsapp); color: white; }
+.d-whatsapp:hover { background: #1eb856; }
+.d-cardpay { background: #8e1414; color: white; }
+.d-cardpay:hover { background: #6f0f0f; }
+.d-share { background: white; color: var(--text); border: 1.5px solid #bbb; width: auto; margin: 8px auto 0; padding: 10px 22px; display: flex; }
+.d-share:hover { background: #f5f5f5; }
+
+@media (max-width: 650px) {
+  .header-inner { flex-wrap: wrap; }
+  .menu-toggle { display: block; }
+  nav { display: none; flex-direction: column; align-items: stretch; width: 100%; gap: 0; padding-top: 8px; }
+  nav.open { display: flex; }
+  nav a { padding: 12px 5px; border-top: 1px solid #333; }
+  .hero { padding: 58px 18px; }
+  section { padding: 42px 16px; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+  .card-img { height: 190px; }
+  .floating-contact { right: 12px; bottom: 12px; }
+}
+@media (max-width: 380px) { .grid { grid-template-columns: 1fr; } }
+</style>
+<base target="_blank">
+</head>
+
+<body>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#" aria-label="Roto Tanks home">ROTO<span>TANKS</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open navigation">&#9776; Menu</button>
+    <nav id="mainNav" aria-label="Main navigation">
+      <a href="#products">Shop</a>
+      <a href="#help">Help Center</a>
+      <a href="#contact">Contact</a>
+      <a href="#feedback">Feedback</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <span class="badge">Heavy Duty Tanks</span>
+    <h1>Durable Water Storage Solutions</h1>
+    <p>Quality roto-moulded water tanks, loft tanks and septic tanks — built to last, delivered nationwide within Kenya.</p>
+    <a class="hero-button" href="#products">Explore Our Products</a>
+  </div>
+
+  <section id="products">
+    <h2 class="section-title">Our Products</h2>
+    <p class="section-sub">Browse our full range of heavy duty tanks</p>
+    <div class="filters" aria-label="Filter products">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="Water Tank">Water Tanks</button>
+      <button class="filter-btn" data-filter="Loft Tank">Loft Tanks</button>
+      <button class="filter-btn" data-filter="Septic Tank">Septic Tanks</button>
+    </div>
+    <div class="grid" id="productGrid" aria-live="polite"></div>
+  </section>
+
+  <section id="help">
+    <h2 class="section-title">Help Center</h2>
+    <p class="section-sub">Everything you need to know about ordering</p>
+    <div class="info-grid">
+      <article class="info-card">
+        <div class="icon-circle" aria-hidden="true">&#128722;</div>
+        <h3>Ordering Process</h3>
+        <p>Select a tank, review specifications and follow payment instructions.</p>
+      </article>
+      <article class="info-card">
+        <div class="icon-circle" aria-hidden="true">&#128666;</div>
+        <h3>Delivery Information</h3>
+        <p>Nationwide delivery available within 3–5 working days.</p>
+      </article>
+      <article class="info-card">
+        <div class="icon-circle" aria-hidden="true">&#9742;</div>
+        <h3>Customer Support</h3>
+        <p>Email or phone support available Monday to Friday, 8 AM to 5 PM.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="section-sub">We're here to help with your order</p>
+    <div class="contact-wrap">
+      <article class="contact-item">
+        <h3>Phone</h3>
+        <p><a href="tel:+254100578057">0100578057</a></p>
+      </article>
+      <article class="contact-item">
+        <h3>Email</h3>
+        <p><a href="mailto:info@rototanks.com">info@rototanks.com</a></p>
+      </article>
+      <article class="contact-item">
+        <h3>WhatsApp</h3>
+        <p><a href="https://wa.me/254100578057" target="_blank" rel="noopener noreferrer">0100578057</a></p>
+      </article>
+      <article class="contact-item">
+        <h3>Location</h3>
+        <p>Enterprise Road, Industrial Area / Near Jomo Kenyatta Foundation / Nairobi, Kenya</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="feedback">
+    <h2 class="section-title">Customer Feedback</h2>
+    <p class="section-sub">We Value Your Feedback</p>
+    <div class="info-grid">
+      <article class="info-card feedback-card">
+        <p>Your feedback helps us improve our products and services.</p>
+        <p>Please send your feedback to: <a href="mailto:feedback@rototanks.com"><strong>feedback@rototanks.com</strong></a></p>
+        <a class="hero-button" href="mailto:feedback@rototanks.com?subject=Roto%20Tanks%20Feedback">Send Feedback</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="policies">
+    <h2 class="section-title">Our Policies</h2>
+    <p class="section-sub">Terms of Use and Privacy Policy</p>
+    <div class="policy-grid">
+      <article class="policy-card" id="terms">
+        <h3>Terms &amp; Conditions</h3>
+        <p>All products are sold subject to availability. Prices may change without notice.</p>
+        <p>Delivery timelines are estimates and may vary based on location and logistics.</p>
+        <p>Returns and exchanges are subject to our return policy available upon request.</p>
+      </article>
+      <article class="policy-card" id="privacy">
+        <h3>Your Privacy Matters</h3>
+        <p>We respect your privacy. No personal data is shared with third parties without your consent.</p>
+        <p>All payment information is processed securely and not stored on our servers.</p>
+        <p>For more details about our data practices, please contact us directly.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="#help">Help Center</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#contact">Contact Us</a>
+    <a href="#terms">Terms of Use</a>
+    <a href="#privacy">Privacy Policy</a>
+  </div>
+  <p>&copy; 2025 Roto Tanks. All rights reserved.</p>
+</footer>
+
+<a class="floating-contact" href="https://wa.me/254100578057" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.04 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 9.88 9.9c0 5.44-4.44 9.87-9.89 9.87zm8.42-18.3A11.82 11.82 0 0 0 12.04 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.68 1.44h.01c6.55 0 11.89-5.33 11.89-11.9 0-3.18-1.24-6.16-3.48-8.4z"/></svg>
+  Contact Us
+</a>
+
+<!-- ===== Product detail modal ===== -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="Product details">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <div class="detail-img"><img id="dImg" src="" alt=""></div>
+    <span class="detail-cat" id="dCat"></span>
+    <h3 id="dName"></h3>
+    <p class="d-desc" id="dDesc"></p>
+    <div class="d-dims-label">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7v-2"/></svg>
+      Dimensions
+    </div>
+    <div class="d-dims" id="dDims"></div>
+    <div class="d-stars-row">
+      <span class="stars"><span id="dStarsBase">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="fill" id="dStarsFill">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
+      <span class="d-reviews" id="dReviews"></span>
+      <span class="d-sold">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+        <span id="dSold"></span>
+      </span>
+    </div>
+    <div class="d-price" id="dPrice"></div>
+    <button class="d-btn d-cart" id="dAddCart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1.5"/><circle cx="19" cy="21" r="1.5"/><path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21.5 7H6"/></svg>
+      Add to Cart
+    </button>
+    <button class="d-btn d-mpesa" id="dMpesa">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+      Buy Via M-Pesa
+    </button>
+    <button class="d-btn d-whatsapp" id="dWhatsapp">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.04 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 9.88 9.9c0 5.44-4.44 9.87-9.89 9.87z"/></svg>
+      Buy via WhatsApp
+    </button>
+    <button class="d-btn d-cardpay" id="dCard">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+      Pay with Card
+    </button>
+    <button class="d-btn d-share" id="dShare">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+      Share Product
+    </button>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+const WHATSAPP_NUMBER = "254100578057";
+const IMAGES = {
+  "Water Tank": "images/water-tank.jpg",
+  "Loft Tank": "images/loft-tank.jpg",
+  "Septic Tank": "images/septic-tank.jpg"
+};
+const CAT_CLASS = { "Water Tank": "b-water", "Loft Tank": "b-loft", "Septic Tank": "b-septic" };
+
+const products = [
+  {cat:"Water Tank", name:"20,000L Triple Layer Tank", desc:"Large 20,000L triple layer cylindrical water tank with enhanced durability for industrial water storage.", dims:"338 x 255 cm", price:"KES 145,000", rating:4.8},
+  {cat:"Water Tank", name:"20,000L Double Layer Tank", desc:"20,000L double layer cylindrical water tank for reliable industrial and commercial water storage.", dims:"338 x 255 cm", price:"KES 110,000", rating:4.6},
+  {cat:"Water Tank", name:"16,000L Triple Layer Tank", desc:"16,000L triple layer cylindrical tank offering superior durability for large-scale water storage.", dims:"314 x 244 cm", price:"KES 87,000", rating:4.7},
+  {cat:"Water Tank", name:"16,000L Double Layer Tank", desc:"16,000L double layer cylindrical water tank for commercial and agricultural applications.", dims:"314 x 244 cm", price:"KES 74,000", rating:4.5},
+  {cat:"Water Tank", name:"10,000L Triple Layer Tank", desc:"10,000L triple layer cylindrical water tank with enhanced UV protection and durability.", dims:"221 x 284 cm", price:"KES 52,500", rating:4.6},
+  {cat:"Water Tank", name:"10,000L Double Layer Tank", desc:"10,000L double layer cylindrical water tank for reliable large-capacity water storage.", dims:"221 x 284 cm", price:"KES 45,000", rating:4.4},
+  {cat:"Water Tank", name:"8,000L Triple Layer Tank", desc:"8,000L triple layer cylindrical water tank with superior construction for long-lasting use.", dims:"219 x 236 cm", price:"KES 43,000", rating:4.5},
+  {cat:"Water Tank", name:"8,000L Double Layer Tank", desc:"8,000L double layer cylindrical water tank offering excellent value for commercial use.", dims:"219 x 236 cm", price:"KES 32,000", rating:4.3},
+  {cat:"Water Tank", name:"6,000L Water Tank", desc:"6,000L cylindrical water tank suitable for medium-sized commercial or large residential use.", dims:"203 x 209 cm", price:"KES 27,000", rating:4.4},
+  {cat:"Water Tank", name:"5,000L Water Tank", desc:"5,000L cylindrical water tank ideal for small commercial establishments or large households.", dims:"180 x 211 cm", price:"KES 24,000", rating:4.5},
+  {cat:"Water Tank", name:"4,000L Water Tank", desc:"4,000L cylindrical water tank perfect for growing families or small businesses.", dims:"165 x 200 cm", price:"KES 21,000", rating:4.3},
+  {cat:"Water Tank", name:"3,000L Water Tank", desc:"3,000L cylindrical water tank for residential use and small commercial applications.", dims:"160 x 163 cm", price:"KES 16,300", rating:4.4},
+  {cat:"Water Tank", name:"2,500L Water Tank", desc:"2,500L cylindrical water tank suitable for medium-sized households.", dims:"155 x 150 cm", price:"KES 14,000", rating:4.2},
+  {cat:"Water Tank", name:"2,300L Water Tank", desc:"2,300L cylindrical water tank offering reliable water storage for residential use.", dims:"136 x 170 cm", price:"KES 12,000", rating:4.3},
+  {cat:"Water Tank", name:"2,000L Water Tank", desc:"2,000L cylindrical water tank ideal for small to medium families.", dims:"134 x 145 cm", price:"KES 10,500", rating:4.1},
+  {cat:"Water Tank", name:"1,500L Water Tank", desc:"1,500L cylindrical water tank for compact residential water storage.", dims:"126 x 133 cm", price:"KES 8,400", rating:4.0},
+  {cat:"Water Tank", name:"1,000L Water Tank", desc:"1,000L cylindrical water tank perfect for small households or as supplementary storage.", dims:"117 x 110 cm", price:"KES 7,000", rating:4.2},
+  {cat:"Loft Tank", name:"230L Loft Tank", desc:"Compact 230L rectangular loft tank designed for attic or overhead installation in residential buildings.", dims:"99 x 68 x 36 cm", price:"KES 5,500", rating:4.3},
+  {cat:"Loft Tank", name:"400L Loft Tank", desc:"400L rectangular loft tank perfect for space-saving overhead water storage in apartments and homes.", dims:"100 x 100 x 45 cm", price:"KES 6,200", rating:4.2},
+  {cat:"Loft Tank", name:"460L Loft Tank", desc:"460L rectangular loft water storage tank with space-efficient design for residential overhead installation.", dims:"147 x 94 x 42 cm", price:"KES 6,885", rating:4.4},
+  {cat:"Loft Tank", name:"690L Loft Tank", desc:"690L rectangular loft tank providing substantial overhead water storage capacity for larger households.", dims:"172 x 89 x 52 cm", price:"KES 7,550", rating:4.3},
+  {cat:"Loft Tank", name:"920L Loft Tank", desc:"920L rectangular loft tank offering significant overhead water storage with compact footprint design.", dims:"127 x 127 x 58 cm", price:"KES 8,415", rating:4.5},
+  {cat:"Septic Tank", name:"1,700L Vertical Septic Tank", desc:"1,700L vertical septic tank suitable for households with up to 5 people, designed for efficient waste management.", dims:"161 x 148 cm", price:"KES 21,940", rating:4.6},
+  {cat:"Septic Tank", name:"2,700L Vertical Septic Tank", desc:"2,700L vertical septic tank designed to serve households with up to 10 people with reliable waste treatment.", dims:"161 x 200 cm", price:"KES 25,510", rating:4.5},
+  {cat:"Septic Tank", name:"3,700L Vertical Septic Tank", desc:"3,700L vertical septic tank suitable for households with up to 15 people, featuring durable construction.", dims:"161 x 248 cm", price:"KES 30,330", rating:4.7},
+  {cat:"Septic Tank", name:"4,500L Vertical Septic Tank", desc:"4,500L vertical septic tank designed for households with up to 20 people, offering high-capacity waste management.", dims:"215 x 190 cm", price:"KES 37,020", rating:4.8},
+  {cat:"Septic Tank", name:"6,000L Vertical Septic Tank", desc:"6,000L vertical septic tank suitable for households with up to 30 people or small commercial establishments.", dims:"215 x 225 cm", price:"KES 42,151", rating:4.9},
+  {cat:"Septic Tank", name:"2,000L Horizontal Septic Tank", desc:"2,000L horizontal septic tank suitable for households with up to 7 people, ideal for shallow ground installation.", dims:"214 x 112 x 128 cm", price:"KES 16,700", rating:4.5},
+  {cat:"Septic Tank", name:"3,000L Horizontal Septic Tank", desc:"3,000L horizontal septic tank designed to serve households with up to 12 people, featuring easy maintenance access.", dims:"254 x 122 x 138 cm", price:"KES 21,000", rating:4.6},
+  {cat:"Septic Tank", name:"3,800L Horizontal Septic Tank", desc:"3,800L horizontal septic tank suitable for households with up to 18 people, offering efficient waste treatment.", dims:"250 x 143 x 159 cm", price:"KES 34,760", rating:4.7},
+  {cat:"Septic Tank", name:"4,500L Horizontal Septic Tank", desc:"4,500L horizontal septic tank designed for households with up to 25 people, featuring robust construction and easy access.", dims:"258 x 167 x 177 cm", price:"KES 39,000", rating:4.8}
+];
+
+/* Deterministic demo stats per product (replace with real counts anytime) */
+products.forEach((p, i) => {
+  p.reviews = 18 + (i * 7) % 45;          // 18 – 62 reviews
+  p.sold = 90 + (i * 37) % 430;           // 90 – 519 sold
+});
+
+const productGrid = document.getElementById("productGrid");
+const backdrop = document.getElementById("modalBackdrop");
+let current = null;
+
+/* ---------- product grid ---------- */
+function renderProducts(filter = "all") {
+  productGrid.replaceChildren();
+  const filtered = products.filter(p => filter === "all" || p.cat === filter);
+  if (!filtered.length) {
+    const msg = document.createElement("p");
+    msg.className = "empty-message"; msg.textContent = "No products found.";
+    productGrid.appendChild(msg); return;
+  }
+  filtered.forEach(p => {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.innerHTML =
+      '<div class="card-img">' +
+        '<img src="' + IMAGES[p.cat] + '" alt="' + p.name + '" loading="lazy">' +
+        '<span class="card-cat ' + CAT_CLASS[p.cat] + '">' + p.cat + '</span>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<h3>' + p.name + '</h3>' +
+        '<p>' + p.desc + '</p>' +
+        '<div class="card-meta">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7v-2"/></svg>' +
+          '<span>' + p.dims + '</span>' +
+        '</div>' +
+        '<div class="card-footer">' +
+          '<span class="price">' + p.price + '</span>' +
+          '<span class="rating">&#9733; ' + p.rating.toFixed(1) + '</span>' +
+        '</div>' +
+        '<button class="view-btn" type="button">' +
+          '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>' +
+          'View Details' +
+        '</button>' +
+      '</div>';
+    card.querySelector(".view-btn").addEventListener("click", () => openDetails(p));
+    productGrid.appendChild(card);
+  });
+}
+
+/* ---------- detail modal ---------- */
+function openDetails(p) {
+  current = p;
+  document.getElementById("dImg").src = IMAGES[p.cat];
+  document.getElementById("dImg").alt = p.name;
+  const cat = document.getElementById("dCat");
+  cat.textContent = p.cat;
+  cat.className = "detail-cat " + CAT_CLASS[p.cat];
+  document.getElementById("dName").textContent = p.name;
+  document.getElementById("dDesc").textContent = p.desc;
+  document.getElementById("dDims").textContent = p.dims;
+  document.getElementById("dReviews").textContent = "(" + p.reviews + " reviews)";
+  document.getElementById("dSold").textContent = p.sold + " sold";
+  document.getElementById("dPrice").textContent = p.price;
+  document.getElementById("dStarsFill").style.width = (p.rating / 5 * 100) + "%";
+  backdrop.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeDetails() {
+  backdrop.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.getElementById("modalClose").addEventListener("click", closeDetails);
+backdrop.addEventListener("click", e => { if (e.target === backdrop) closeDetails(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDetails(); });
+
+/* ---------- modal actions ---------- */
+function wa(text) {
+  window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text), "_blank", "noopener,noreferrer");
+}
+document.getElementById("dWhatsapp").addEventListener("click", () => {
+  wa("Hello Roto Tanks! I am interested in ordering:\n\n" +
+     "Product: " + current.name + "\n" +
+     "Category: " + current.cat + "\n" +
+     "Dimensions: " + current.dims + "\n" +
+     "Listed price: " + current.price + "\n\n" +
+     "Please confirm availability, delivery charges and payment instructions.");
+});
+document.getElementById("dMpesa").addEventListener("click", () => {
+  wa("Hello Roto Tanks! I would like to buy via M-Pesa:\n\n" +
+     "Product: " + current.name + "\n" +
+     "Listed price: " + current.price + "\n\n" +
+     "Please send me the M-Pesa payment details.");
+});
+document.getElementById("dCard").addEventListener("click", () => {
+  wa("Hello Roto Tanks! I would like to pay by card for:\n\n" +
+     "Product: " + current.name + "\n" +
+     "Listed price: " + current.price + "\n\n" +
+     "Please share the card payment link/instructions.");
+});
+document.getElementById("dAddCart").addEventListener("click", () => {
+  alert("Added to cart!\n\nOnline checkout is coming soon — for now, please complete your order via WhatsApp or M-Pesa and we will confirm immediately.");
+});
+document.getElementById("dShare").addEventListener("click", async () => {
+  const shareData = { title: current.name, text: current.name + " — " + current.price + " | Roto Tanks", url: location.href };
+  try {
+    if (navigator.share) { await navigator.share(shareData); }
+    else { await navigator.clipboard.writeText(shareData.text + "\n" + shareData.url); alert("Product link copied to clipboard!"); }
+  } catch (err) { /* user cancelled */ }
+});
+
+/* ---------- filters & menu ---------- */
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderProducts(btn.dataset.filter);
+  });
+});
+const menuToggle = document.getElementById("menuToggle");
+const mainNav = document.getElementById("mainNav");
+menuToggle.addEventListener("click", () => {
+  const open = mainNav.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(open));
+});
+mainNav.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    mainNav.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  });
+});
+
+renderProducts();
+</script>
+</body>
+</html>

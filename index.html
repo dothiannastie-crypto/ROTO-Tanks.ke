@@ -587,14 +587,26 @@ function getOrders() {
 function setOrders(list) { localStorage.setItem(LS_KEY, JSON.stringify(list)); }
 
 async function saveOrder(order) {
-  const res = await fetch(ORDER_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify(order)
-  });
-  const text = await res.text();
-  if (!res.ok || !/ok/i.test(text)) {
-    throw new Error("Server said: " + (text.slice(0, 160) || ("HTTP " + res.status)));
+  const body = JSON.stringify(order);
+  try {
+    // Try a verified request first (so we can surface server errors).
+    const res = await fetch(ORDER_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: body
+    });
+    const text = await res.text();
+    if (!res.ok || !/ok/i.test(text)) {
+      throw new Error("Server said: " + (text.slice(0, 160) || ("HTTP " + res.status)));
+    }
+  } catch (err) {
+    // If the browser blocked the response (CORS redirect), retry fire-and-forget.
+    await fetch(ORDER_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body: body
+    });
   }
 }
 

@@ -248,7 +248,7 @@ footer { background: var(--black); color: #ddd; text-align: center; padding: 28p
     <div class="contact-wrap">
       <article class="contact-item">
         <h3>Phone</h3>
-        <p><a href="tel:+254728204478">0728204478</a></p>
+        <p><a href="tel:+254100578057">0100578057</a></p>
       </article>
       <article class="contact-item">
         <h3>Email</h3>
@@ -587,17 +587,14 @@ function getOrders() {
 function setOrders(list) { localStorage.setItem(LS_KEY, JSON.stringify(list)); }
 
 async function saveOrder(order) {
-  if (ORDER_ENDPOINT) {
-    const res = await fetch(ORDER_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify(order)
-    });
-    if (!res.ok) throw new Error("server error");
-  } else {
-    const list = getOrders();
-    list.push(order);
-    setOrders(list);
+  const res = await fetch(ORDER_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify(order)
+  });
+  const text = await res.text();
+  if (!res.ok || !/ok/i.test(text)) {
+    throw new Error("Server said: " + (text.slice(0, 160) || ("HTTP " + res.status)));
   }
 }
 
@@ -638,7 +635,7 @@ document.getElementById("orderForm").addEventListener("submit", async e => {
     e.target.reset();
     document.getElementById("oProduct").value = current ? current.name : oProduct.value;
   } catch (err) {
-    status.textContent = "Submission failed. Please try again or order via WhatsApp.";
+    status.textContent = "Submission failed: " + (err && err.message ? err.message : "network error") + " — please try again or order via WhatsApp.";
     status.className = "order-status err";
   }
 });

@@ -144,6 +144,30 @@ footer { background: var(--black); color: #ddd; text-align: center; padding: 28p
 .d-share { background: white; color: var(--text); border: 1.5px solid #bbb; width: auto; margin: 8px auto 0; padding: 10px 22px; display: flex; }
 .d-share:hover { background: #f5f5f5; }
 
+/* ===== Order form & admin panel ===== */
+.order-form-wrap { border-top: 1px solid var(--border); margin-top: 16px; padding-top: 16px; }
+.order-form-wrap h4 { color: var(--black); margin-bottom: 12px; font-size: 1rem; }
+#orderForm input, #orderForm select, #orderForm textarea {
+  width: 100%; border: 1px solid #ccc; border-radius: 6px; padding: 10px 12px;
+  margin-bottom: 10px; font: inherit; font-size: .92rem; background: white; color: var(--text);
+}
+#orderForm textarea { resize: vertical; min-height: 60px; }
+.order-status { font-size: .88rem; margin-top: 4px; min-height: 1.2em; }
+.order-status.ok { color: #2e9e5b; font-weight: 600; }
+.order-status.err { color: var(--primary); font-weight: 600; }
+.admin-modal { max-width: 720px; }
+.admin-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.admin-list { max-height: 55vh; overflow-y: auto; padding-right: 4px; }
+.order-row { border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; font-size: .88rem; }
+.order-row .o-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.order-row .o-head strong { color: var(--black); }
+.order-row .o-meta { color: var(--muted); font-size: .82rem; margin-bottom: 6px; }
+.order-row .o-line { margin: 2px 0; overflow-wrap: anywhere; }
+.order-row .o-status-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+.order-row select { padding: 5px 8px; border: 1px solid #ccc; border-radius: 5px; font: inherit; font-size: .85rem; }
+.order-row .o-del { background: none; border: 1px solid #ccc; border-radius: 5px; padding: 5px 10px; color: var(--primary); font-size: .82rem; }
+.order-row .o-del:hover { background: #fdf2f2; }
+
 @media (max-width: 650px) {
   .header-inner { flex-wrap: wrap; }
   .menu-toggle { display: block; }
@@ -224,7 +248,7 @@ footer { background: var(--black); color: #ddd; text-align: center; padding: 28p
     <div class="contact-wrap">
       <article class="contact-item">
         <h3>Phone</h3>
-        <p><a href="tel:+254728204478">0728204478</a></p>
+        <p><a href="tel:+254100578057">0100578057</a></p>
       </article>
       <article class="contact-item">
         <h3>Email</h3>
@@ -280,11 +304,12 @@ footer { background: var(--black); color: #ddd; text-align: center; padding: 28p
     <a href="#contact">Contact Us</a>
     <a href="#terms">Terms of Use</a>
     <a href="#privacy">Privacy Policy</a>
+    <a href="#" id="adminLink">Admin</a>
   </div>
   <p>&copy; 2025 Roto Tanks. All rights reserved.</p>
 </footer>
 
-<a class="floating-contact" href="https://wa.me/254100578057" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp">
+<a class="floating-contact" href="https://wa.me/254728204478" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp">
   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.04 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 9.88 9.9c0 5.44-4.44 9.87-9.89 9.87zm8.42-18.3A11.82 11.82 0 0 0 12.04 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.68 1.44h.01c6.55 0 11.89-5.33 11.89-11.9 0-3.18-1.24-6.16-3.48-8.4z"/></svg>
   Contact Us
 </a>
@@ -331,6 +356,35 @@ footer { background: var(--black); color: #ddd; text-align: center; padding: 28p
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
       Share Product
     </button>
+
+    <div class="order-form-wrap">
+      <h4>Or place your order online</h4>
+      <form id="orderForm" novalidate>
+        <select id="oProduct" aria-label="Tank"></select>
+        <input id="oName" type="text" placeholder="Full name" required>
+        <input id="oEmail" type="email" placeholder="Email address" required>
+        <input id="oPhone" type="tel" placeholder="WhatsApp number" required>
+        <textarea id="oAddress" placeholder="Delivery address (county, town, street / landmark)" required></textarea>
+        <textarea id="oNotes" placeholder="Notes (optional)"></textarea>
+        <button class="d-btn d-cart" type="submit">Submit Order</button>
+        <p class="order-status" id="orderStatus" role="status"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Admin panel modal ===== -->
+<div class="modal-backdrop" id="adminModal" role="dialog" aria-modal="true" aria-label="Admin panel">
+  <div class="modal admin-modal">
+    <button class="modal-close" id="adminClose" aria-label="Close">&times;</button>
+    <h3>Admin Panel &mdash; Orders</h3>
+    <p class="d-desc">Total orders placed: <strong id="adminCount">0</strong></p>
+    <div class="admin-actions">
+      <button class="filter-btn" id="adminRefresh" type="button">Refresh</button>
+      <button class="filter-btn" id="adminExport" type="button">Export CSV</button>
+      <button class="filter-btn" id="adminClear" type="button">Clear All Orders</button>
+    </div>
+    <div id="adminList" class="admin-list"></div>
   </div>
 </div>
 
@@ -442,6 +496,7 @@ function openDetails(p) {
   document.getElementById("dSold").textContent = p.sold + " sold";
   document.getElementById("dPrice").textContent = p.price;
   document.getElementById("dStarsFill").style.width = (p.rating / 5 * 100) + "%";
+  document.getElementById("oProduct").value = p.name;
   backdrop.classList.add("open");
   document.body.style.overflow = "hidden";
 }
@@ -507,6 +562,179 @@ mainNav.querySelectorAll("a").forEach(link => {
     mainNav.classList.remove("open");
     menuToggle.setAttribute("aria-expanded", "false");
   });
+});
+
+/* ---------- online orders (database) ----------
+   By default orders are stored in this browser (localStorage).
+   To share orders across all devices, set ORDER_ENDPOINT to a free
+   Google Apps Script web app URL (POST, JSON) — see setup notes. */
+const ORDER_ENDPOINT = "https://script.google.com/macros/s/AKfycbz-82cimon1lXwgs2zk9jkhwnibIEgcCqWqKeL51kM8z9e1zSxlVosaT6rAcLYGdb2U/exec";
+const LS_KEY = "rotoOrders";
+const ADMIN_PASSWORD = "roto2025"; /* change this password */
+
+const oProduct = document.getElementById("oProduct");
+products.forEach(p => {
+  const opt = document.createElement("option");
+  opt.value = p.name;
+  opt.textContent = p.name + " — " + p.price;
+  oProduct.appendChild(opt);
+});
+
+function getOrders() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
+  catch (e) { return []; }
+}
+function setOrders(list) { localStorage.setItem(LS_KEY, JSON.stringify(list)); }
+
+async function saveOrder(order) {
+  if (ORDER_ENDPOINT) {
+    const res = await fetch(ORDER_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify(order)
+    });
+    if (!res.ok) throw new Error("server error");
+  } else {
+    const list = getOrders();
+    list.push(order);
+    setOrders(list);
+  }
+}
+
+document.getElementById("orderForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const status = document.getElementById("orderStatus");
+  const fields = {
+    name: document.getElementById("oName").value.trim(),
+    email: document.getElementById("oEmail").value.trim(),
+    phone: document.getElementById("oPhone").value.trim(),
+    address: document.getElementById("oAddress").value.trim(),
+    notes: document.getElementById("oNotes").value.trim()
+  };
+  if (!fields.name || !fields.email || !fields.phone || !fields.address) {
+    status.textContent = "Please fill in your name, email, WhatsApp number and address.";
+    status.className = "order-status err";
+    return;
+  }
+  const prod = products.find(p => p.name === oProduct.value) || {};
+  const order = {
+    id: Date.now(),
+    date: new Date().toLocaleString(),
+    product: oProduct.value,
+    price: prod.price || "",
+    name: fields.name,
+    email: fields.email,
+    phone: fields.phone,
+    address: fields.address,
+    notes: fields.notes,
+    status: "Pending"
+  };
+  status.textContent = "Submitting order…";
+  status.className = "order-status";
+  try {
+    await saveOrder(order);
+    status.textContent = "✅ Order received! We will contact you shortly to confirm.";
+    status.className = "order-status ok";
+    e.target.reset();
+    document.getElementById("oProduct").value = current ? current.name : oProduct.value;
+  } catch (err) {
+    status.textContent = "Submission failed. Please try again or order via WhatsApp.";
+    status.className = "order-status err";
+  }
+});
+
+/* ---------- admin panel ---------- */
+const adminModal = document.getElementById("adminModal");
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function openAdmin() {
+  if (sessionStorage.getItem("rotoAdmin") !== "1") {
+    const pw = prompt("Enter admin password:");
+    if (pw === null) return;
+    if (pw !== ADMIN_PASSWORD) { alert("Incorrect password."); return; }
+    sessionStorage.setItem("rotoAdmin", "1");
+  }
+  renderAdmin();
+  adminModal.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeAdmin() {
+  adminModal.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.getElementById("adminLink").addEventListener("click", e => { e.preventDefault(); openAdmin(); });
+document.getElementById("adminClose").addEventListener("click", closeAdmin);
+adminModal.addEventListener("click", e => { if (e.target === adminModal) closeAdmin(); });
+document.getElementById("adminRefresh").addEventListener("click", renderAdmin);
+
+function renderAdmin() {
+  const list = getOrders().slice().sort((x, y) => y.id - x.id);
+  document.getElementById("adminCount").textContent = String(list.length);
+  const box = document.getElementById("adminList");
+  box.replaceChildren();
+  if (!list.length) {
+    const p = document.createElement("p");
+    p.className = "empty-message"; p.textContent = "No orders yet.";
+    box.appendChild(p); return;
+  }
+  list.forEach(o => {
+    const row = document.createElement("div");
+    row.className = "order-row";
+    row.innerHTML =
+      '<div class="o-head"><strong>' + esc(o.product) + '</strong><span>' + esc(o.price) + '</span></div>' +
+      '<div class="o-meta">' + esc(o.date) + ' &middot; #' + esc(o.id) + '</div>' +
+      '<div class="o-line"><strong>Name:</strong> ' + esc(o.name) + '</div>' +
+      '<div class="o-line"><strong>Email:</strong> ' + esc(o.email) + '</div>' +
+      '<div class="o-line"><strong>WhatsApp:</strong> ' + esc(o.phone) + '</div>' +
+      '<div class="o-line"><strong>Address:</strong> ' + esc(o.address) + '</div>' +
+      (o.notes ? '<div class="o-line"><strong>Notes:</strong> ' + esc(o.notes) + '</div>' : '') +
+      '<div class="o-status-row">' +
+        '<label for="st' + esc(o.id) + '">Status:</label>' +
+        '<select id="st' + esc(o.id) + '" data-id="' + esc(o.id) + '">' +
+          ["Pending", "Confirmed", "Delivered", "Cancelled"].map(s =>
+            '<option value="' + s + '"' + (o.status === s ? " selected" : "") + '>' + s + '</option>').join("") +
+        '</select>' +
+        '<a class="filter-btn" style="display:inline-block;text-decoration:none;" href="https://wa.me/' + esc(String(o.phone).replace(/\D/g, "").replace(/^0/, "254")) + '?text=' +
+          encodeURIComponent("Hello " + o.name + ", regarding your Roto Tanks order for " + o.product + " (" + (o.price || "") + ").") + '" target="_blank" rel="noopener noreferrer">Chat</a>' +
+        '<button class="o-del" data-del="' + esc(o.id) + '" type="button">Delete</button>' +
+      '</div>';
+    box.appendChild(row);
+  });
+}
+
+document.getElementById("adminList").addEventListener("change", e => {
+  const id = Number(e.target.dataset.id);
+  const list = getOrders();
+  const o = list.find(x => x.id === id);
+  if (o) { o.status = e.target.value; setOrders(list); }
+});
+document.getElementById("adminList").addEventListener("click", e => {
+  const del = e.target.dataset.del;
+  if (!del) return;
+  if (!confirm("Delete this order?")) return;
+  setOrders(getOrders().filter(x => String(x.id) !== String(del)));
+  renderAdmin();
+});
+
+document.getElementById("adminExport").addEventListener("click", () => {
+  const list = getOrders();
+  if (!list.length) { alert("No orders to export."); return; }
+  const head = ["Date", "Product", "Price", "Name", "Email", "WhatsApp", "Address", "Notes", "Status"];
+  const rows = list.map(o => [o.date, o.product, o.price, o.name, o.email, o.phone, o.address, o.notes, o.status]
+    .map(v => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"').join(","));
+  const csv = head.join(",") + "\n" + rows.join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const aEl = document.createElement("a");
+  aEl.href = URL.createObjectURL(blob);
+  aEl.download = "roto-orders.csv";
+  aEl.click();
+  URL.revokeObjectURL(aEl.href);
+});
+
+document.getElementById("adminClear").addEventListener("click", () => {
+  if (!confirm("Delete ALL orders? This cannot be undone.")) return;
+  setOrders([]);
+  renderAdmin();
 });
 
 renderProducts();

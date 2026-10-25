@@ -379,6 +379,7 @@ footer { background: var(--black); color: #ddd; text-align: center; padding: 28p
     <button class="modal-close" id="adminClose" aria-label="Close">&times;</button>
     <h3>Admin Panel &mdash; Orders</h3>
     <p class="d-desc">Total orders placed: <strong id="adminCount">0</strong></p>
+    <p class="d-desc" id="adminSource" style="font-size:.82rem;">&nbsp;</p>
     <div class="admin-actions">
       <button class="filter-btn" id="adminRefresh" type="button">Refresh</button>
       <button class="filter-btn" id="adminExport" type="button">Export CSV</button>
@@ -588,6 +589,10 @@ function setOrders(list) { localStorage.setItem(LS_KEY, JSON.stringify(list)); }
 
 async function saveOrder(order) {
   const body = JSON.stringify(order);
+  /* always keep a local copy for the admin panel */
+  const localList = getOrders();
+  localList.push(order);
+  setOrders(localList);
   try {
     // Try a verified request first (so we can surface server errors).
     const res = await fetch(ORDER_ENDPOINT, {
@@ -676,8 +681,44 @@ document.getElementById("adminClose").addEventListener("click", closeAdmin);
 adminModal.addEventListener("click", e => { if (e.target === adminModal) closeAdmin(); });
 document.getElementById("adminRefresh").addEventListener("click", renderAdmin);
 
-function renderAdmin() {
-  const list = getOrders().slice().sort((x, y) => y.id - x.id);
+async function fetchRemoteOrders() {
+  if (!ORDER_ENDPOINT) return { error: "no endpoint set" };
+  try {
+    const res = await fetch(ORDER_ENDPOINT);
+    if (!res.ok) return { error: "sheet HTTP " + res.status };
+    const rows = await res.json();
+    if (!Array.isArray(rows)) return { error: "unexpected sheet response" };
+    return { rows: rows.map((r, i) => ({
+      id: r[9] || (i + 1),
+      date: r[0] || "",
+      product: r[1] || "",
+      price: r[2] || "",
+      name: r[3] || "",
+      email: r[4] || "",
+      phone: r[5] || "",
+      address: r[6] || "",
+      notes: r[7] || "",
+      status: r[8] || "Pending"
+    })) };
+  } catch (e) { return { error: String(e && e.message ? e.message : e) }; }
+}
+
+async function renderAdmin() {
+  const remote = await fetchRemoteOrders();
+  let list, sourceNote;
+  if (remote.rows && remote.rows.length) {
+    list = remote.rows;
+    sourceNote = "Source: Google Sheet (live)";
+  } else {
+    list = getOrders();
+    sourceNote = remote.error
+      ? "Source: local backup — sheet unreachable (" + remote.error + ")"
+      : "Source: local backup (sheet is empty)";
+  }
+  document.getElementById("adminSource").textContent = sourceNote;
+  list = list.slice().sort(function(x, y) {
+    return String(y.date).localeCompare(String(x.date));
+  });
   document.getElementById("adminCount").textContent = String(list.length);
   const box = document.getElementById("adminList");
   box.replaceChildren();

@@ -168,6 +168,17 @@ footer { background: var(--black); color: #ddd; text-align: center; padding: 28p
 .order-row .o-del { background: none; border: 1px solid #ccc; border-radius: 5px; padding: 5px 10px; color: var(--primary); font-size: .82rem; }
 .order-row .o-del:hover { background: #fdf2f2; }
 
+/* ===== Cart ===== */
+.cart-toggle { border: 1px solid #555; border-radius: 7px; padding: 7px 12px; color: white; background: transparent; font-weight: 700; white-space: nowrap; }
+.cart-toggle:hover { border-color: var(--primary); color: #ff6267; }
+.cart-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: .88rem; }
+.cart-item .ci-info { flex: 1; }
+.cart-item .ci-name { color: var(--black); font-weight: 700; }
+.cart-item .ci-price { color: var(--primary); font-weight: 700; white-space: nowrap; }
+.cart-item .ci-del { background: none; border: 1px solid #ccc; border-radius: 5px; padding: 4px 9px; color: var(--primary); font-size: .8rem; flex-shrink: 0; }
+.cart-item .ci-del:hover { background: #fdf2f2; }
+.cart-total-row { text-align: right; padding: 10px 2px; color: var(--black); border-top: 1px solid var(--border); margin-top: 4px; }
+
 @media (max-width: 650px) {
   .header-inner { flex-wrap: wrap; }
   .menu-toggle { display: block; }
@@ -190,6 +201,7 @@ footer { background: var(--black); color: #ddd; text-align: center; padding: 28p
 <header>
   <div class="header-inner">
     <a class="logo" href="#" aria-label="Roto Tanks home">ROTO<span>TANKS</span></a>
+    <button class="cart-toggle" id="cartToggle" aria-label="Open cart">&#128722; Cart (<span id="cartCount">0</span>)</button>
     <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open navigation">&#9776; Menu</button>
     <nav id="mainNav" aria-label="Main navigation">
       <a href="#products">Shop</a>
@@ -373,6 +385,29 @@ footer { background: var(--black); color: #ddd; text-align: center; padding: 28p
   </div>
 </div>
 
+<!-- ===== Cart modal ===== -->
+<div class="modal-backdrop" id="cartModal" role="dialog" aria-modal="true" aria-label="Shopping cart">
+  <div class="modal admin-modal">
+    <button class="modal-close" id="cartClose" aria-label="Close">&times;</button>
+    <h3>Your Cart</h3>
+    <div id="cartList" class="admin-list"></div>
+    <div class="cart-total-row" id="cartTotalRow">Total: <strong id="cartTotal">KES 0</strong></div>
+    <div class="order-form-wrap">
+      <h4>Checkout — deliver to:</h4>
+      <form id="cartForm" novalidate>
+        <input id="cName" type="text" placeholder="Full name" required>
+        <input id="cEmail" type="email" placeholder="Email address" required>
+        <input id="cPhone" type="tel" placeholder="WhatsApp number" required>
+        <textarea id="cAddress" placeholder="Delivery address (county, town, street / landmark)" required></textarea>
+        <textarea id="cNotes" placeholder="Notes (optional)"></textarea>
+        <button class="d-btn d-cart" type="submit">Submit Order</button>
+        <button class="d-btn d-whatsapp" id="cartWhatsapp" type="button">Order Cart via WhatsApp</button>
+        <p class="order-status" id="cartStatus" role="status"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- ===== Admin panel modal ===== -->
 <div class="modal-backdrop" id="adminModal" role="dialog" aria-modal="true" aria-label="Admin panel">
   <div class="modal admin-modal">
@@ -522,19 +557,13 @@ document.getElementById("dWhatsapp").addEventListener("click", () => {
      "Please confirm availability, delivery charges and payment instructions.");
 });
 document.getElementById("dMpesa").addEventListener("click", () => {
-  wa("Hello Roto Tanks! I would like to buy via M-Pesa:\n\n" +
-     "Product: " + current.name + "\n" +
-     "Listed price: " + current.price + "\n\n" +
-     "Please send me the M-Pesa payment details.");
+  alert("⚠️ M-Pesa checkout is temporarily under maintenance and will be back soon.\n\nMeanwhile, you can place your order using the online order form below or via WhatsApp.");
 });
 document.getElementById("dCard").addEventListener("click", () => {
-  wa("Hello Roto Tanks! I would like to pay by card for:\n\n" +
-     "Product: " + current.name + "\n" +
-     "Listed price: " + current.price + "\n\n" +
-     "Please share the card payment link/instructions.");
+  alert("⚠️ Card payment is temporarily under maintenance and will be back soon.\n\nMeanwhile, you can place your order using the online order form below or via WhatsApp.");
 });
 document.getElementById("dAddCart").addEventListener("click", () => {
-  alert("Added to cart!\n\nOnline checkout is coming soon — for now, please complete your order via WhatsApp or M-Pesa and we will confirm immediately.");
+  addToCart(current);
 });
 document.getElementById("dShare").addEventListener("click", async () => {
   const shareData = { title: current.name, text: current.name + " — " + current.price + " | Roto Tanks", url: location.href };
@@ -662,12 +691,9 @@ const adminModal = document.getElementById("adminModal");
 const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 function openAdmin() {
-  if (sessionStorage.getItem("rotoAdmin") !== "1") {
-    const pw = prompt("Enter admin password:");
-    if (pw === null) return;
-    if (pw !== ADMIN_PASSWORD) { alert("Incorrect password."); return; }
-    sessionStorage.setItem("rotoAdmin", "1");
-  }
+  const pw = prompt("Enter admin password:");
+  if (pw === null) return;
+  if (pw !== ADMIN_PASSWORD) { alert("Incorrect password."); return; }
   renderAdmin();
   adminModal.classList.add("open");
   document.body.style.overflow = "hidden";
@@ -787,6 +813,138 @@ document.getElementById("adminClear").addEventListener("click", () => {
   renderAdmin();
 });
 
+/* ---------- shopping cart ---------- */
+const CART_KEY = "rotoCart";
+const cartModal = document.getElementById("cartModal");
+
+function getCart() {
+  try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); }
+  catch (e) { return []; }
+}
+function setCart(list) { localStorage.setItem(CART_KEY, JSON.stringify(list)); }
+function priceValue(p) { return Number(String(p).replace(/[^0-9.]/g, "")) || 0; }
+function cartTotal(list) { return list.reduce((s, it) => s + priceValue(it.price), 0); }
+function updateCartCount() {
+  document.getElementById("cartCount").textContent = String(getCart().length);
+}
+function addToCart(p) {
+  const list = getCart();
+  list.push({ name: p.name, cat: p.cat, price: p.price });
+  setCart(list);
+  updateCartCount();
+  const btn = document.getElementById("dAddCart");
+  const original = btn.innerHTML;
+  btn.innerHTML = "&#10003; Added to Cart";
+  setTimeout(() => { btn.innerHTML = original; }, 1500);
+}
+
+function openCart() {
+  renderCart();
+  cartModal.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeCart() {
+  cartModal.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.getElementById("cartToggle").addEventListener("click", openCart);
+document.getElementById("cartClose").addEventListener("click", closeCart);
+cartModal.addEventListener("click", e => { if (e.target === cartModal) closeCart(); });
+
+function renderCart() {
+  const list = getCart();
+  const box = document.getElementById("cartList");
+  box.replaceChildren();
+  if (!list.length) {
+    const p = document.createElement("p");
+    p.className = "empty-message"; p.textContent = "Your cart is empty.";
+    box.appendChild(p);
+  } else {
+    list.forEach((it, i) => {
+      const row = document.createElement("div");
+      row.className = "cart-item";
+      row.innerHTML =
+        '<div class="ci-info"><div class="ci-name">' + esc(it.name) + '</div>' +
+        '<div style="color:var(--muted);font-size:.8rem;">' + esc(it.cat) + '</div></div>' +
+        '<span class="ci-price">' + esc(it.price) + '</span>' +
+        '<button class="ci-del" type="button" data-i="' + i + '">Remove</button>';
+      box.appendChild(row);
+    });
+  }
+  document.getElementById("cartTotal").textContent = "KES " + cartTotal(list).toLocaleString();
+}
+document.getElementById("cartList").addEventListener("click", e => {
+  const i = e.target.dataset.i;
+  if (i === undefined) return;
+  const list = getCart();
+  list.splice(Number(i), 1);
+  setCart(list);
+  updateCartCount();
+  renderCart();
+});
+
+function cartSummaryText(list) {
+  return list.map((it, i) => (i + 1) + ". " + it.name + " — " + it.price).join("\n");
+}
+
+document.getElementById("cartWhatsapp").addEventListener("click", () => {
+  const list = getCart();
+  if (!list.length) { alert("Your cart is empty — add a product first."); return; }
+  const name = document.getElementById("cName").value.trim();
+  const phone = document.getElementById("cPhone").value.trim();
+  wa("Hello Roto Tanks! I would like to order:\n\n" + cartSummaryText(list) +
+     "\n\nTotal: KES " + cartTotal(list).toLocaleString() +
+     (name ? "\n\nName: " + name : "") +
+     (phone ? "\nWhatsApp: " + phone : "") +
+     "\n\nPlease confirm availability, delivery charges and payment instructions.");
+});
+
+document.getElementById("cartForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const status = document.getElementById("cartStatus");
+  const list = getCart();
+  if (!list.length) { status.textContent = "Your cart is empty — add a product first."; status.className = "order-status err"; return; }
+  const fields = {
+    name: document.getElementById("cName").value.trim(),
+    email: document.getElementById("cEmail").value.trim(),
+    phone: document.getElementById("cPhone").value.trim(),
+    address: document.getElementById("cAddress").value.trim(),
+    notes: document.getElementById("cNotes").value.trim()
+  };
+  if (!fields.name || !fields.email || !fields.phone || !fields.address) {
+    status.textContent = "Please fill in your name, email, WhatsApp number and address.";
+    status.className = "order-status err";
+    return;
+  }
+  const order = {
+    id: Date.now(),
+    date: new Date().toLocaleString(),
+    product: "Cart order — " + list.length + " item" + (list.length > 1 ? "s" : ""),
+    price: "KES " + cartTotal(list).toLocaleString(),
+    name: fields.name,
+    email: fields.email,
+    phone: fields.phone,
+    address: fields.address,
+    notes: (fields.notes ? fields.notes + "\n" : "") + "Items:\n" + cartSummaryText(list),
+    status: "Pending"
+  };
+  status.textContent = "Submitting order…";
+  status.className = "order-status";
+  try {
+    await saveOrder(order);
+    status.textContent = "✅ Order received! We will contact you shortly to confirm.";
+    status.className = "order-status ok";
+    setCart([]);
+    updateCartCount();
+    renderCart();
+    e.target.reset();
+  } catch (err) {
+    status.textContent = "Submission failed. Please try again or order via WhatsApp.";
+    status.className = "order-status err";
+  }
+});
+
+updateCartCount();
 renderProducts();
 </script>
 </body>
